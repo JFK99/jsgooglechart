@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>jsgooglechart Demo Page</title>
+  </head>
+  <body>
+    <div id="target"></div>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="../helper/jsgooglechart.js"></script>
+    <script>
+        google.load('visualization', '1.0', {'packages':['corechart']});
+        $(document).ready(function(){
+            piechart = new Stat("", "", "PieChart", "target"); 
+            piechart.drawVisualization(dummyData);
+        });
+        var dummyData = {
+           "data":{
+              "chart":{
+                 "data":{
+                    "rows":[
+                       {
+                          "c":[
+                             {
+                                "f":"No",
+                                "v":"No"
+                             },
+                             {
+                                "f":860,
+                                "v":860
+                             }
+                          ]
+                       },
+                       {
+                          "c":[
+                             {
+                                "f":"Yes",
+                                "v":"Yes"
+                             },
+                             {
+                                "f":4500,
+                                "v":4500
+                             }
+                          ]
+                       }
+                    ],
+                    "cols":[
+                       {
+                          "pattern":"",
+                          "type":"string",
+                          "id":"",
+                          "label":"State"
+                       },
+                       {
+                          "pattern":"",
+                          "type":"string",
+                          "id":"",
+                          "label":"Count"
+                       }
+                    ]
+                 },
+                 "options":{
+                    "title":"Is Godzilla stronger than Biollante?",
+                    "width":"550",
+                    "height":"340",
+                    "backgroundColor":"transparent",
+                    "is3D":true,
+                    "legend":{
+                       "textStyle":{
+                          "color":"gray",
+                          "fontName":"Open Sans",
+                          "fontSize":"14"
+                       },
+                       "position":"bottom"
+                    },
+                    "slices":[
+                       {
+                          "color":"#d7d7d7"
+                       },
+                       {
+                          "color":"#235e7c"
+                       },
+                       {
+                          "color":"#2b2b3b"
+                       },
+                       {
+                          "color":"#97a5bb"
+                       },
+                       {
+                          "color":"#bfd8f5"
+                       }
+                    ],
+                    "animation":{
+                       "duration":"1000"
+                    },
+                    "titleTextStyle":{
+                       "color":"#8b948c",
+                       "fontName":"Open Sans",
+                       "fontSize":"20"
+                    },
+                    "tooltip":{
+                       "textStyle":{
+                          "color":"gray"
+                       },
+                       "showColorCode":true
+                    }
+                 }
+              }
+           },
+           "success":true
+        }
+
+        
+
+    </script>
+  </body>
+</html>
+       

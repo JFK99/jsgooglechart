@@ -1,0 +1,174 @@
+<!DOCTYPE html>  <html> <head>   <title>jsgooglechart.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               jsgooglechart.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>Statistics.js is a tiny helper to generate google charts<br/>
+It Requires <a href="http://jquery.com/">jQuery</a></p>
+
+<h3>How to use it:</h3>
+
+<pre><code>myChart = new Stat(   
+             urlToFetch (string), 
+             params (string), 
+             TypeOfChart (string), 
+             locationToInjectTheChart (string));
+myChart.fetch(); 
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h4>Example:</h4>
+
+<h5>Using Ajax call to get your data</h5>
+
+<pre><code>comboChart = new Stat(   
+             "api/mydata", 
+             "start_date=10%2F02%2F2012&amp;end_date=10%2F17%2F2012", 
+             "ComboChart", 
+             "conversions");
+comboChart.fetch(); 
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <h5>Data generated in your template (See the demo)</h5>
+
+<pre><code>comboChart = new Stat(   
+             "", 
+             "", 
+             "PieChart", 
+             "target");
+piechart.drawVisualization(myData);
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">function</span> <span class="nx">Stat</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">postData</span><span class="p">,</span> <span class="nx">chartType</span><span class="p">,</span> <span class="nx">domTarget</span><span class="p">){</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">url</span>       <span class="o">=</span> <span class="nx">url</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">postData</span>  <span class="o">=</span> <span class="nx">postData</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">chartType</span> <span class="o">=</span> <span class="nx">chartType</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">domTarget</span> <span class="o">=</span> <span class="nx">domTarget</span><span class="p">;</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="nx">Stat</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Helper function to handle ajax call<br/>
+Strongly inspired by <a href="http://bit.ly/ROVSQ3">disqus / gargoyle</a></p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">api</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">params</span><span class="p">,</span> <span class="nx">succ</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+            <span class="nx">url</span><span class="o">:</span> <span class="nx">url</span><span class="p">,</span>
+            <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+            <span class="nx">data</span><span class="o">:</span> <span class="nx">params</span><span class="p">,</span>
+            <span class="nx">dataType</span><span class="o">:</span> <span class="s2">&quot;json&quot;</span><span class="p">,</span>
+            <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">resp</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">resp</span><span class="p">.</span><span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">succ</span><span class="p">(</span><span class="nx">resp</span><span class="p">);</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="nx">alert</span><span class="p">(</span><span class="nx">resp</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="nx">failure</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;Internal Error.&quot;</span><span class="p">)</span>
+
+            <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="p">},</span>
+    </pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <ol>
+<li>Fetch data from the server as JSON syntax, </li>
+<li>Call <code>drawVisualization</code></li>
+</ol>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">fetch</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+        <span class="kd">var</span> <span class="nx">_this</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">api</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">postData</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">JSONdata</span><span class="p">){</span>
+            <span class="nx">_this</span><span class="p">.</span><span class="nx">drawVisualization</span><span class="p">(</span><span class="nx">JSONdata</span><span class="p">);</span>
+        <span class="p">});</span> 
+    <span class="p">},</span>
+    </pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Draw the chart and inject into the dom location specified
+at the instanciation time <code>domTarget</code></p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">drawVisualization</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">JSONdata</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">JSONObject</span> <span class="o">=</span> <span class="nx">JSONdata</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">chart</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">data</span>       <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">visualization</span><span class="p">.</span><span class="nx">DataTable</span><span class="p">(</span><span class="nx">JSONObject</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">chart</span>      <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">visualization</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">chartType</span><span class="p">](</span><span class="nx">target</span><span class="p">);</span>
+        <span class="nx">chart</span><span class="p">.</span><span class="nx">draw</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">JSONdata</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">chart</span><span class="p">.</span><span class="nx">options</span><span class="p">);</span>
+    <span class="p">},</span>
+    
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <h3>Example of expected JSON data</h3>
+
+<p><pre><code></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="cm">/*</span>
+<span class="cm">{</span>
+<span class="cm">   &quot;data&quot;:{</span>
+<span class="cm">      &quot;chart&quot;:{</span>
+<span class="cm">         &quot;data&quot;:{</span>
+<span class="cm">            &quot;rows&quot;:[</span>
+<span class="cm">               {</span>
+<span class="cm">                  &quot;c&quot;:[</span>
+<span class="cm">                     {</span>
+<span class="cm">                        &quot;f&quot;:&quot;No&quot;,</span>
+<span class="cm">                        &quot;v&quot;:&quot;No&quot;</span>
+<span class="cm">                     },</span>
+<span class="cm">                     {</span>
+<span class="cm">                        &quot;f&quot;:860,</span>
+<span class="cm">                        &quot;v&quot;:860</span>
+<span class="cm">                     }</span>
+<span class="cm">                  ]</span>
+<span class="cm">               },</span>
+<span class="cm">               {</span>
+<span class="cm">                  &quot;c&quot;:[</span>
+<span class="cm">                     {</span>
+<span class="cm">                        &quot;f&quot;:&quot;Yes&quot;,</span>
+<span class="cm">                        &quot;v&quot;:&quot;Yes&quot;</span>
+<span class="cm">                     },</span>
+<span class="cm">                     {</span>
+<span class="cm">                        &quot;f&quot;:4500,</span>
+<span class="cm">                        &quot;v&quot;:4500</span>
+<span class="cm">                     }</span>
+<span class="cm">                  ]</span>
+<span class="cm">               }</span>
+<span class="cm">            ],</span>
+<span class="cm">            &quot;cols&quot;:[</span>
+<span class="cm">               {</span>
+<span class="cm">                  &quot;pattern&quot;:&quot;&quot;,</span>
+<span class="cm">                  &quot;type&quot;:&quot;string&quot;,</span>
+<span class="cm">                  &quot;id&quot;:&quot;&quot;,</span>
+<span class="cm">                  &quot;label&quot;:&quot;State&quot;</span>
+<span class="cm">               },</span>
+<span class="cm">               {</span>
+<span class="cm">                  &quot;pattern&quot;:&quot;&quot;,</span>
+<span class="cm">                  &quot;type&quot;:&quot;string&quot;,</span>
+<span class="cm">                  &quot;id&quot;:&quot;&quot;,</span>
+<span class="cm">                  &quot;label&quot;:&quot;Count&quot;</span>
+<span class="cm">               }</span>
+<span class="cm">            ]</span>
+<span class="cm">         },</span>
+<span class="cm">         &quot;options&quot;:{</span>
+<span class="cm">            &quot;title&quot;:&quot;Is Godzilla stronger than Biollante?&quot;,</span>
+<span class="cm">            &quot;width&quot;:&quot;550&quot;,</span>
+<span class="cm">            &quot;height&quot;:&quot;340&quot;,</span>
+<span class="cm">            &quot;backgroundColor&quot;:&quot;transparent&quot;,</span>
+<span class="cm">            &quot;is3D&quot;:true,</span>
+<span class="cm">            &quot;legend&quot;:{</span>
+<span class="cm">               &quot;textStyle&quot;:{</span>
+<span class="cm">                  &quot;color&quot;:&quot;gray&quot;,</span>
+<span class="cm">                  &quot;fontName&quot;:&quot;Open Sans&quot;,</span>
+<span class="cm">                  &quot;fontSize&quot;:&quot;14&quot;</span>
+<span class="cm">               },</span>
+<span class="cm">               &quot;position&quot;:&quot;bottom&quot;</span>
+<span class="cm">            },</span>
+<span class="cm">            &quot;slices&quot;:[</span>
+<span class="cm">               {</span>
+<span class="cm">                  &quot;color&quot;:&quot;#d7d7d7&quot;</span>
+<span class="cm">               },</span>
+<span class="cm">               {</span>
+<span class="cm">                  &quot;color&quot;:&quot;#235e7c&quot;</span>
+<span class="cm">               },</span>
+<span class="cm">               {</span>
+<span class="cm">                  &quot;color&quot;:&quot;#2b2b3b&quot;</span>
+<span class="cm">               },</span>
+<span class="cm">               {</span>
+<span class="cm">                  &quot;color&quot;:&quot;#97a5bb&quot;</span>
+<span class="cm">               },</span>
+<span class="cm">               {</span>
+<span class="cm">                  &quot;color&quot;:&quot;#bfd8f5&quot;</span>
+<span class="cm">               }</span>
+<span class="cm">            ],</span>
+<span class="cm">            &quot;animation&quot;:{</span>
+<span class="cm">               &quot;duration&quot;:&quot;1000&quot;</span>
+<span class="cm">            },</span>
+<span class="cm">            &quot;titleTextStyle&quot;:{</span>
+<span class="cm">               &quot;color&quot;:&quot;#8b948c&quot;,</span>
+<span class="cm">               &quot;fontName&quot;:&quot;Open Sans&quot;,</span>
+<span class="cm">               &quot;fontSize&quot;:&quot;20&quot;</span>
+<span class="cm">            },</span>
+<span class="cm">            &quot;tooltip&quot;:{</span>
+<span class="cm">               &quot;textStyle&quot;:{</span>
+<span class="cm">                  &quot;color&quot;:&quot;gray&quot;</span>
+<span class="cm">               },</span>
+<span class="cm">               &quot;showColorCode&quot;:true</span>
+<span class="cm">            }</span>
+<span class="cm">         }</span>
+<span class="cm">      }</span>
+<span class="cm">   },</span>
+<span class="cm">   &quot;success&quot;:true</span>
+<span class="cm">}</span>
+<span class="cm">*/</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p></code></pre></p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
