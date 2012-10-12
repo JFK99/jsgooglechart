@@ -1,4 +1,4 @@
-// Statistics.js is a tiny helper to generate google charts<br/>
+// jsgooglechart.js is a tiny helper to generate google charts<br/>
 // It Requires [jQuery](http://jquery.com/)
 // ###How to use it:###
 //     myChart = new Stat(   
