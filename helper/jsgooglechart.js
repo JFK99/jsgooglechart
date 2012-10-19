@@ -30,7 +30,7 @@ function Stat(url, postData, chartType, domTarget){
 
     this.url       = url;
     this.postData  = postData;
-    if((typeof chartType == 'undefined')||(chartType === "")){  
+    if((typeof chartType === 'undefined')||(chartType === "")){  
         throw new CustomError("chartType",
             'Please specify a chart type (options are: '+
             'ComboChart, PieChart, LineChart, BarChart, MapChart, ScatterChart)');
