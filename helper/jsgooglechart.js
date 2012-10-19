@@ -1,5 +1,6 @@
 // jsgooglechart.js is a tiny helper to generate google charts<br/>
-// It Requires [jQuery](http://jquery.com/)
+// It Requires [jQuery](http://jquery.com/), 
+// [underscore.js](http://bit.ly/wC89vt)<br/>
 // ###How to use it:###
 //     myChart = new Stat(   
 //                  urlToFetch (string), 
@@ -26,13 +27,26 @@
 //     piechart.drawVisualization(myData);
 
 function Stat(url, postData, chartType, domTarget){
+
     this.url       = url;
     this.postData  = postData;
-    this.chartType = chartType;
-    this.domTarget = domTarget;
+    if((typeof chartType == 'undefined')||(chartType === "")){  
+        throw new CustomError("chartType",
+            'Please specify a chart type (options are: '+
+            'ComboChart, PieChart, LineChart, BarChart, MapChart, ScatterChart)');
+    } else {
+        this.chartType = chartType;
+    }
+    if((typeof domTarget === 'undefined')||(domTarget === "")){  
+        throw new CustomError('domTarget', 
+            'Please specify a target for your chart');
+            
+    }else{
+        this.domTarget = domTarget;    
+    }
+    this.id = Math.ceil(Math.random()*1000);
     return this;
 }
-
 
 Stat.prototype = {
     // Helper function to handle ajax call<br/>
@@ -71,11 +85,34 @@ Stat.prototype = {
     drawVisualization: function(JSONdata){
         var JSONObject = JSONdata.data.chart.data;
         var data       = new google.visualization.DataTable(JSONObject, 0.5);
-        var chart      = new google.visualization[this.chartType](target);
+
+        var chartTemplateCompiled = _.template(chartTemplate.innerHTML);
+        var target                = document.getElementById(this.domTarget);
+        target.innerHTML          = target.innerHTML + 
+                                    chartTemplateCompiled({id: this.id});
+        var chart = new google.visualization[this.chartType](
+                         document.getElementById(this.id));
         chart.draw(data, JSONdata.data.chart.options);
     },
     
 }
+
+// Error Handling
+function CustomError(name ,message) {
+    this.name = "jsgooglechart.js - " + name;
+    this.message = message || "Default Message";
+}
+CustomError.prototype = new Error();
+CustomError.prototype.constructor = CustomError;
+
+
+// try {
+//     throw new CustomError("jsgooglechart.js", "custom message");
+// } catch (e) {
+//     console.log(e.name);     // "MyError"
+//     console.log(e.message);  // "custom message"
+// }
+
 // ### Example of expected JSON data
 // <pre><code>
 /*

@@ -1,118 +1,353 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>jsgooglechart Demo Page</title>
-  </head>
-  <body>
-    <div id="target"></div>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="../helper/jsgooglechart.js"></script>
-    <script>
-        google.load('visualization', '1.0', {'packages':['corechart']});
-        $(document).ready(function(){
-            piechart = new Stat("", "", "PieChart", "target"); 
-            piechart.drawVisualization(dummyData);
-        });
-        var dummyData = {
-           "data":{
-              "chart":{
-                 "data":{
-                    "rows":[
-                       {
-                          "c":[
-                             {
-                                "f":"No",
-                                "v":"No"
-                             },
-                             {
-                                "f":860,
-                                "v":860
-                             }
-                          ]
-                       },
-                       {
-                          "c":[
-                             {
-                                "f":"Yes",
-                                "v":"Yes"
-                             },
-                             {
-                                "f":4500,
-                                "v":4500
-                             }
-                          ]
-                       }
-                    ],
-                    "cols":[
-                       {
-                          "pattern":"",
-                          "type":"string",
-                          "id":"",
-                          "label":"State"
-                       },
-                       {
-                          "pattern":"",
-                          "type":"string",
-                          "id":"",
-                          "label":"Count"
-                       }
-                    ]
-                 },
-                 "options":{
-                    "title":"Is Godzilla stronger than Biollante?",
-                    "width":"550",
-                    "height":"340",
-                    "backgroundColor":"transparent",
-                    "is3D":true,
-                    "legend":{
-                       "textStyle":{
-                          "color":"gray",
-                          "fontName":"Open Sans",
-                          "fontSize":"14"
-                       },
-                       "position":"bottom"
-                    },
-                    "slices":[
-                       {
-                          "color":"#d7d7d7"
-                       },
-                       {
-                          "color":"#235e7c"
-                       },
-                       {
-                          "color":"#2b2b3b"
-                       },
-                       {
-                          "color":"#97a5bb"
-                       },
-                       {
-                          "color":"#bfd8f5"
-                       }
-                    ],
-                    "animation":{
-                       "duration":"1000"
-                    },
-                    "titleTextStyle":{
-                       "color":"#8b948c",
-                       "fontName":"Open Sans",
-                       "fontSize":"20"
-                    },
-                    "tooltip":{
-                       "textStyle":{
-                          "color":"gray"
-                       },
-                       "showColorCode":true
+    <head>
+        <title>jsgooglechart Demo Page</title>
+        <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+        <style>
+            ul.thumbnails li div {
+                height: 350px;
+                padding: 0px;
+            }
+            .lead { 
+                margin-top: 10px; 
+            }
+        </style>
+    </head>
+    <body>
+        <div class='container'>
+            <p class="lead">jsgooglechart.js demo</p>
+            <ul class="thumbnails" id='js-charts'></ul>
+        </div>
+
+        <!-- Template used to generate individual chart
+        Custom it as you wish you need to keep the <%=id %> in a div tag -->
+        <script type="text/template" id="chartTemplate">
+            <li class="span6">
+                <div class="thumbnail" id='<%=id %>'></div>
+            </li>
+        </script>
+
+
+        <script type="text/javascript" 
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
+        </script>
+        <script type="text/javascript" 
+            src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js">
+        </script>
+        
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="../helper/jsgooglechart.js"></script>
+        <script>
+            google.load('visualization', '1.0', {'packages':['corechart']});
+            $(document).ready(function(){
+                piechart = new Stat("", "", "PieChart", "js-charts"); 
+                piechart.drawVisualization(dummyDataPieChart);
+
+                comboChart = new Stat("", "", "ComboChart", "js-charts"); 
+                comboChart.drawVisualization(dummyDatacomboChart);
+            });
+            var dummyDataPieChart = {
+               "data":{
+                  "chart":{
+                     "data":{
+                        "rows":[
+                           {
+                              "c":[
+                                 {
+                                    "f":"No",
+                                    "v":"No"
+                                 },
+                                 {
+                                    "f":860,
+                                    "v":860
+                                 }
+                              ]
+                           },
+                           {
+                              "c":[
+                                 {
+                                    "f":"Yes",
+                                    "v":"Yes"
+                                 },
+                                 {
+                                    "f":4500,
+                                    "v":4500
+                                 }
+                              ]
+                           },
+                           {
+                              "c":[
+                                 {
+                                    "f":"I don't know",
+                                    "v":"I don't know"
+                                 },
+                                 {
+                                    "f":500,
+                                    "v":500
+                                 }
+                              ]
+                           },
+                           {
+                              "c":[
+                                 {
+                                    "f":"Who is Godzilla",
+                                    "v":"Who is Godzilla"
+                                 },
+                                 {
+                                    "f":900,
+                                    "v":900
+                                 }
+                              ]
+                           }
+                        ],
+                        "cols":[
+                           {
+                              "pattern":"",
+                              "type":"string",
+                              "id":"",
+                              "label":"State"
+                           },
+                           {
+                              "pattern":"",
+                              "type":"string",
+                              "id":"",
+                              "label":"Count"
+                           },
+                           {
+                              "pattern":"",
+                              "type":"string",
+                              "id":"",
+                              "label":"Count"
+                           },
+                           {
+                              "pattern":"",
+                              "type":"string",
+                              "id":"",
+                              "label":"Count"
+                           },
+                        ]
+                     },
+                     "options":{
+                        "title":"Is Godzilla stronger than Biollante?",
+                        "backgroundColor":"transparent",
+                        "is3D":true,
+                        "legend":{
+                           "textStyle":{
+                              "color":"gray",
+                              "fontName":"Open Sans",
+                              "fontSize":"14"
+                           },
+                           "position":"bottom"
+                        },
+                        "slices":[
+                           {
+                              "color":"#d7d7d7"
+                           },
+                           {
+                              "color":"#235e7c"
+                           },
+                           {
+                              "color":"#2b2b3b"
+                           },
+                           {
+                              "color":"#97a5bb"
+                           },
+                           {
+                              "color":"#bfd8f5"
+                           }
+                        ],
+                        "titleTextStyle":{
+                           "color":"#8b948c",
+                           "fontName":"Open Sans",
+                           "fontSize":"20",
+                        },
+                        "tooltip":{
+                           "textStyle":{
+                              "color":"gray"
+                           },
+                           "showColorCode":true
+                        }
+                     }
+                  }
+               },
+               "success":true
+            };
+
+            var dummyDatacomboChart = { 
+                "data":{
+                      "chart":{
+                         "data":{
+                            "rows":[
+                               {
+                                  "c":[
+                                     {
+                                        "v":"1954"
+                                     },
+                                     {
+                                        "v":60
+                                     },
+                                     {
+                                        "v":90
+                                     },
+                                     {
+                                        "f":"66.66%",
+                                        "v":0.66666666666667
+                                     }
+                                  ]
+                               },
+                               {
+                                  "c":[
+                                     {
+                                        "v":"1962"
+                                     },
+                                     {
+                                        "v":20
+                                     },
+                                     {
+                                        "v":25
+                                     },
+                                     {
+                                        "f":"80.00%",
+                                        "v":0.8
+                                     }
+                                  ]
+                               },
+                               {
+                                  "c":[
+                                     {
+                                        "v":"1981"
+                                     },
+                                     {
+                                        "v":106
+                                     },
+                                     {
+                                        "v":133
+                                     },
+                                     {
+                                        "f":"79.69%",
+                                        "v":0.79699248120301
+                                     }
+                                  ]
+                               },
+                              
+                               {
+                                  "c":[
+                                     {
+                                        "v":"1998"
+                                     },
+                                     {
+                                        "v":67
+                                     },
+                                     {
+                                        "v":123
+                                     },
+                                     {
+                                        "f":"54.47%",
+                                        "v":0.54471544715447
+                                     }
+                                  ]
+                               },
+                               {
+                                  "c":[
+                                     {
+                                        "v":"2001"
+                                     },
+                                     {
+                                        "v":121
+                                     },
+                                     {
+                                        "v":121
+                                     },
+                                     {
+                                        "f":"100%",
+                                        "v":1
+                                     }
+                                  ]
+                               },
+                             
+                              
+                              
+                            ],
+                            "cols":[
+                               {
+                                  "pattern":"",
+                                  "type":"string",
+                                  "id":"",
+                                  "label":"Years"
+                               },
+                               {
+                                  "pattern":"",
+                                  "type":"number",
+                                  "id":"",
+                                  "label":"Wins"
+                               },
+                               {
+                                  "pattern":"",
+                                  "type":"number",
+                                  "id":"",
+                                  "label":"Fights"
+                               },
+                               {
+                                  "pattern":"",
+                                  "type":"number",
+                                  "id":"",
+                                  "label":"Wins Rate"
+                               }
+                            ]
+                         },
+                         
+                        "options" :{
+                        title    : "Gozilla Fights and Wins",
+                        colors   : ['#b69fa8', '#8b948c', '#ff927e', 
+                                    '#aab4b6', '#d2b7a3'],
+                        legend : { 
+                            'textStyle' : {                   
+                                'color'    : 'gray', 
+                                "fontSize" : 14 
+                            }, 
+                            "position" : "bottom" 
+                        },
+                        
+                        titlePosition : "out",
+                        titleTextStyle : {
+                            color      : '#8b948c', 
+                            fontName   : "Open Sans", 
+                            fontSize   : 18, 
+                            fontWeight : "normal"
+                        },
+                        lineWidth: 3,
+                        isStacked: true,
+                        hAxis    : {
+                            title : "Weeks"
+                        },
+                        vAxes:{
+                            0 : {title :'Fights & Wins'},
+                            1 : {
+                                  title: 'Wins Rate',
+                                  format: "%",
+                                  maxValue: 1,
+                                  minValue: 0
+                                }
+                        },
+                        seriesType: 
+                            "bars",
+                            series: {
+                                2: {
+                                    type            : "line", 
+                                    targetAxisIndex : 1
+                                }
+                            }
                     }
-                 }
-              }
-           },
-           "success":true
-        }
+
+                      }
+                   },
+                   "success":true
+                };
+
 
         
-
-    </script>
+        </script>
   </body>
 </html>
        
