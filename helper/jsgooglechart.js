@@ -106,13 +106,6 @@ CustomError.prototype = new Error();
 CustomError.prototype.constructor = CustomError;
 
 
-// try {
-//     throw new CustomError("jsgooglechart.js", "custom message");
-// } catch (e) {
-//     console.log(e.name);     // "MyError"
-//     console.log(e.message);  // "custom message"
-// }
-
 // ### Example of expected JSON data
 // <pre><code>
 /*
